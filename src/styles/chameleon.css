@@ -1,0 +1,261 @@
+/* custom hljs styles*/
+:root {
+    --bg: #0d242d;
+    --fg: #ffffff;
+    --fg-alt: #dceec8;
+    --black: #173f4f; /* alias: darkblue */
+    --black90: #2f5361;
+    --black75: #516f7b;
+    --black50: #8b9fa7;
+    --red: #c86663;
+    --darkred: #cc3545;
+    --green: #73ba25;
+    --green90: #81c13b;
+    --green75: #96cb5c;
+    --green50: #b0dc92;
+    --darkgreen: #6da741;
+    --darkgreen90: #7cb054;
+    --darkgreen75: #92bc71;
+    --darkgreen50: #b6d3a0;
+    --darkgreen25: #dae9cf;
+    --yellow: #ffc107;
+    --orange: #E19F38;
+    --blue: #21a4df;
+    --blue90: #38ade2;
+    --blue75: #59bbe7;
+    --blue50: #90d1ef;
+    --darkblue50: #73add3;
+    --darkblue75: #5795d2;
+    --darkblue90: #2b84cd;
+    --darkblue: #087ac6;
+    --magenta: #1aad95;
+    --darkmagenta: #00a489;
+    /* --cyan: #4eac89; */
+    --cyan: #35b9ab;
+    --cyan90: #4ac0b4;
+    --cyan75: #68cbc0;
+    --cyan50: #9adcd5;
+    --darkcyan: #6ab37c;
+    --white: #ffffff;
+}
+
+/* old chameleon */
+pre code.hljs {
+    display: block;
+    overflow-x: auto;
+    padding: .5em
+}
+
+/* code.hljs {
+    padding: 3px 5px
+} */
+
+
+.hljs-keyword, .hljs-name, .hljs-section, .hljs-selector-id, .hljs-selector-tag {
+    color: var(--green90)
+}
+
+.hljs-title.function, .hljs-title.function.invoke, .hljs-title.class {
+    color: var(--darkgreen25);
+    /* font-weight: 600; */
+}
+
+.hljs-builtin {
+    color: var(--red);
+    /* font-weight: 600; */
+}
+
+.hljs-subst, .hljs-module, .hljs-meta-keyword {
+    color: #21a4df;
+}
+
+.hljs-type, .hljs-meta, .hljs-typing, .hljs-literal {
+    color: #1aad95;
+}
+
+.hljs-number, .hljs-regexp, .hljs-char.escape {
+    color: #ffc107;
+}
+
+.hljs-title, .hljs-section {
+    color: #4eac89;
+    /* font-weight: 600; */
+}
+
+.hljs-meta-prompt {
+    color: #73ba25;
+}
+
+.hljs-variable.constant, .hljs-doctag, .hljs-template-tag, .hljs-title.class.inherited, .hljs-operator {
+    color: #c86663;
+}
+
+.hljs-string, .hljs-symbol, .hljs-meta-string {
+    color: #6ab37c;
+}
+
+.hljs-comment, .hljs-quote, .hljs-punctuation {
+    color: #476f7f;
+    font-style: oblique;
+}
+
+.hljs-variable, .hljs-variable.language, .hljs-params, .hljs.template-variable, .hljs-name {
+    color: #dceec8;
+}
+
+.hljs-tag {
+    background: #efefef
+}
+
+.hljs-selector-class, .hljs-selector-attr, .hljs-selector-pseudo {
+    font-weight: 700;
+    color: var(--darkblue)
+}
+
+.hljs-addition {
+    background: var(--darkcyan);
+}
+
+.hljs-deletion {
+    background: var(--red);
+}
+
+.hljs-emphasis {
+    font-style: italic
+}
+
+.hljs-strong {
+    font-weight: 700
+}
+
+
+/* code.hljs {
+    padding: 3px 5px
+} */
+
+/*
+
+.hljs, .hljs-attr, .hljs-function, .hljs-name, .hljs-params, .hljs-subst, .hljs-type {
+    color: var(--fg-alt)
+}
+
+.hljs-addition, .hljs-regexp, .hljs-section, .hljs-selector-pseudo {
+    color: #73ba2599;
+}
+
+.hljs-built_in, .hljs-class, .hljs-keyword, .hljs-meta .hljs-keyword, .hljs-selector-class {
+    color: var(--cyan);
+}
+
+.hljs-code, .hljs-tag, .hljs-title, .hljs-variable {
+    color: var(--green90)
+}
+
+.hljs-selector-attr, .hljs-string, .hljs-operator {
+    color: var(--red)
+}
+
+.hljs-attribute, .hljs-deletion, .hljs-link, .hljs-symbol, .hljs-meta {
+    color: var(--darkblue)
+}
+
+.hljs-literal, .hljs-selector-id, .hljs-number {
+    color: var(--yellow);
+} */
+
+.hljs-name, .hljs-strong {
+    font-weight: 700
+}
+
+.hljs-emphasis {
+    font-style: italic
+}
+
+
+/* ---------- */
+
+.hljs {
+    color: var(--fg-alt);
+    background: var(--bg);
+    font-weight: 300;
+    /* display: block; */
+    /* overflow-x: auto; */
+    /* padding: 0.5em; */
+}
+
+.hljs-comment, .hljs-meta-keyword {
+    color: var(--black75);
+    font-weight: 300;
+}
+
+.hljs-keyword {
+    /* keyword in a regular Algol style language */
+    color: var(--green90)
+}
+
+.hljs-builtin {
+    /* built-in or library object (constant, class, function) */
+    color: var(--blue90)
+}
+
+.hljs-type {
+    /* data type (string, int, array, etc.) */
+    color: var(--red)
+}
+
+.hljs-literal {
+    /* special identifier for a built-in value (true, false, null etc) */
+    color: var(--green)
+}
+
+.hljs-number {
+    /* number incl. units, modifiers if any */
+    color: var(--yellow);
+    font-weight: 600;
+}
+
+.hljs-operator {
+    /* operators (+. -, >>, |, == etc)*/
+    color: var(--orange)
+}
+
+.hljs-punctuation {
+    /* auxiliary punctuation (use subtle colours) */
+    color: var(--fg-alt)
+}
+
+.hljs-property {
+    /* object property, (obj.prop.value) */
+    color: var(--green50)
+}
+
+.hljs-regexp {
+    /* literal regular expression */
+    color: var(--blue75)
+}
+
+.hljs-string, .hljs-meta-string {
+    /* literal string, character */
+    color: var(--cyan)
+}
+
+
+.hljs-char.escape {
+    color: var(--red);
+}
+
+.hljs-variable {
+    color: var(--yellow);
+}
+
+.hljs-variable.constant {
+    color: var(--green);
+    font-weight: 600;
+}
+
+
+/* .hljs-variable {
+    color: var(--yellow);
+    font-weight: 100;
+} */
+
