@@ -1068,21 +1068,25 @@ function latex(hljs) {
 		}
 	];
 	const INTERNAL_QUANTITY = [
-		{// primitive constants for lengths
+		{ // primitive constants for lengths
 			className: "meta keyword",
-			begin: /\\(baselineskip|baselinestretch|columnsep|columnwidth|evensidemargin|linewidth|oddsidemargin|paperwidth|paperheight|parindent|parskip|tabcolsep|textheight|textwidth|topmargin|unitlength)/
+			begin: /\\(baseline(skip|stretch)|(above|below|inter)display(shortskip|skip)|columnsep|columnwidth|evensidemargin|linewidth|oddsidemargin|paperwidth|paperheight|(?:no|display|par|hang|text)indent|indent|(line)skiplimit|(?:parfill|par|splittop|top|left|right|line|tab|xspace|space)skip|(thin|med|thick)muskip|muskip|tabcolsep|textheight|textwidth|topmargin|unitlength)\b/
 		},
-		{
-			className: "property",
-			begin: /\\([hv]badness|badness|catcode|sfcode|lccode|uccode|inputlineno|font|fontdimen|nullfont|lastskip|hyphenchar|insertpenalties|deadcycles|lastkern|delcode|mathcode|script?font|skewchar|textfont|pagedepth|pagefi[l]{1,3}stretch|pagegoal|pageshrink|pagestretch|pagetotal|parshape|prevgraf|spacefactor|lastpenalty|offinterlineskip)/
+		{ // badness
+			className: "meta keyword",
+			begin: /\\([hv]badness|badness|(cat|sf|lc|uc)code|inputlineno|font|fontdimen|nullfont|lastskip|hyphenchar|deadcycles|lastkern|delcode|mathcode|script?font|skewchar|textfont|pagedepth|pagefil{1,3}stretch|pagegoal|pageshrink|pagestretch|pagetotal|parshape|prevgraf|spacefactor|lastpenalty|(off|no)interlineskip)\b/
+		},
+		{ // penalties
+			className: "meta.keyword",
+			begin: /\\(penalty|insertpenalties)\b/
 		},
 		{
 			className: "type",
-			begin: /\\(box|counter|count|count?(\d{0,3})|dimen|muskip|skip|toks)\b/
+			begin: /\\(counter|count[\da-zA-Z@_]{0,15}|count|dimen@[\da-zA-Z@_]{0,15}|dimen[@\d]{0,3}|dimen|muskip|skip[\d@]{1,3}|skip|toks[\d@]{1,3}|toks|accent[\d@]{0,15}|accent)\b/
 		},
 		{
-			className: "type",
-			begin: /\\new(length|box|counter|count|dimen|muskip|skip|toks)\b/
+			className: "meta keyword",
+			begin: /\\new?(if|length|box|counter|count|dimen|muskip|skip|toks)\b/
 		},
 		{
 			className: "property",
@@ -1095,16 +1099,16 @@ function latex(hljs) {
 	];
 	const BUILTIN_CS = [
 		// Font control
-		{ className: "property", begin: /\\text(tt|bf|sf|sl|it|rm)/ },
-		{ className: "property", begin: /\\(ttfamily|sfshape|slshape|itshape|bfseries|rmshape)/ },
-		{ className: "property", begin: /\\(tt|sf|sl|it|bf|rm)/ },
+		{ className: "property", begin: /\\text(tt|bf|sf|sl|it|rm)\b/ },
+		{ className: "property", begin: /\\(ttfamily|sfshape|slshape|itshape|bfseries|rmshape)\b/ },
+		{ className: "property", begin: /\\(tt|sf|sl|it|bf|rm)\b/ },
 		// Font size
-		{ className: "property", begin: /\\(tiny|scriptsize|footnotesize|small|normalsize|large|Large|LARGE|huge|Huge)/ }
+		{ className: "property", begin: /\\((script|footnote|normal)size|[lL]arge|LARGE|[hH]uge|tiny|small)\b/ }
 	];
 	const TEX_SPACING_CS = [
 		{
-			className: "title function",
-			begin: /\\([hv]top|[hvmfp]box|un[hv]box|[hv]ss|[hv]size|[hv]skip|[hv]space|[hv]fil|[hv]fill|par|cr|crcr|medskip|smallskip|largeskip|\\)/
+			className: "meta keyword",
+			begin: /\\([hv]top|[hvmfp]box|un[hv]box|[hv]ss|[hv]size|[hv]skip|[hv]space|[hv]fil|[hv]fill|par|cr{1,2}|(small|med|large)skip|\\)\b/
 		}
 	];
 	const CONTROL_SEQUENCE = {
