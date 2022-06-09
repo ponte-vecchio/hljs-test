@@ -1013,28 +1013,37 @@ function latex(hljs) {
 	];
 	const ARITHMETIC_CS = [
 		// just numbers
-		{ className: "number", begin: /\b[0-9]+\b/ },
+		{ className: "number", begin: /\b\d+\b/ },
 		// decimals e.g. 1.0, 2.0
-		{ className: "number", begin: /\b[0-9]+\.[0-9]+\b/ },
+		{ className: "number", begin: /\b\d+\.\d+\b/ },
 		// dot decimals e.g. .5
-		{ className: "number", begin: /\b\.[0-9]+\b/ },
+		{ className: "number", begin: /\b\.\d+\b/ },
 		// number + dimen e.g. 1cm  -3.5in  0em  2fill
-		{ className: "number", begin: /\b[0-9]+(pt|pc|bp|in|cm|mm|dd|cc|sp|ex|em|mu|fi[l]{1,3})+\b/ },
-		{ className: "number", begin: /\b[0-9]+\.[0-9]+(pt|pc|bp|in|cm|mm|dd|cc|sp|ex|em|mu|fi[l]{1,3})+\b/ },
-		{ className: "number", begin: /\b\.[0-9]+(pt|pc|bp|in|cm|mm|dd|cc|sp|ex|em|mu|fi[l]{1,3})+\b/ },
-		// to + number + dimen e.g. to4em
-		{ className: "number", begin: /\b(to|plus|minus)?[0-9]+(pt|pc|bp|in|cm|mm|dd|cc|sp|ex|em|mu|fi[l]{1,3})+\b/ },
+		{ className: "number", begin: /\b(\d+)(pt|pc|bp|in|cm|mm|dd|cc|sp|ex|em|mu|fi[l]{1,3})\b/ },
+		{ className: "number", begin: /\b(\d+\.\d+)(pt|pc|bp|in|cm|mm|dd|cc|sp|ex|em|mu|fi[l]{1,3})\b/ },
+		{ className: "number", begin: /\b(\.\d+)(pt|pc|bp|in|cm|mm|dd|cc|sp|ex|em|mu|fi[l]{1,3})\b/ },
+		// arg + number + dimen e.g. to4em
 		{
 			className: "number",
-			begin: /\b(to|plus|minus)?[0-9]+\.[0-9]+(pt|pc|bp|in|cm|mm|dd|cc|sp|ex|em|mu|fi[l]{1,3})+\b/
+			begin: /\b(to|plus|minus|height|depth|width)?\d+?(pt|pc|bp|in|cm|mm|dd|cc|sp|ex|em|mu|fi[l]{1,3})\b/
 		},
-		{ className: "number", begin: /\b(to|plus|minus)?\.[0-9]+(pt|pc|bp|in|cm|mm|dd|cc|sp|ex|em|mu|fi[l]{1,3})+\b/ },
-		// unicode defs
-		{ className: "number", begin: /\b\"?[0-9A-Z]{4,6}\b/ }
-	];
-	const ARITHMETIC_OPERATOR = [
-		{ classname: "operator", begin: /(=|\+|-|\*|\^|&|&=)\b/ },
-		{ classname: "number", begin: /\\(multiply|divide)\b/ }
+		{
+			className: "number",
+			begin: /\b(to|plus|minus|height|depth|width)?\d+\.\d+?(pt|pc|bp|in|cm|mm|dd|cc|sp|ex|em|mu|fi[l]{1,3})\b/
+		},
+		{
+			className: "number",
+			begin: /\b(to|plus|minus|height|depth|width)\.\d+?(pt|pc|bp|in|cm|mm|dd|cc|sp|ex|em|mu|fi[l]{1,3})\b/
+		},
+		//  hexadecimal
+		{ className: "number", begin: /(?:")?([\dA-F]{2,8})\b/ },
+		// ' for octal, none for decimal
+		{ className: "number", begin: /(?:')?([0-7]{2,8})\b/ },
+		// operators
+		{ className: "literal", begin: /=/ },
+		{ className: "operator", begin: /(\+|-|\*|\/|\^|>|<|&&|&=|&)/ },
+		{ className: "operator", begin: /\\(plus|minus|multiply|divide)\b/ },
+		{ className: "number", begin: /(plus|minus|multiply|divide)\b/ }
 	];
 	const FUNCTION_CS = [
 		{
@@ -1164,7 +1173,7 @@ function latex(hljs) {
 		{ relevance: 0 }
 	);
 	const EVERYTHING_BUT_VERBATIM = [
-		ARITHMETIC_CS, ARITHMETIC_OPERATOR, FUNCTION_CS, BUILTIN_CS, TEX_SPACING_CS,
+		ARITHMETIC_CS, FUNCTION_CS, BUILTIN_CS, TEX_SPACING_CS,
 		INTERNAL_QUANTITY,
 		CONTROL_SEQUENCE,
 		MACRO_PARAM,
