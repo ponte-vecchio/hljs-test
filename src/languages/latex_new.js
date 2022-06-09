@@ -1050,13 +1050,17 @@ function latex(hljs) {
 			className: "builtin",
 			begin: /\\(the[a-zA-Z@_]{1,99}|[a-z]{3}expr|expandafter|providecommand|protected|string|long|the)\b/
 		},
-		{
+		{ // declarative builtins
 			className: "builtin",
-			begin: /\\([xeg]def|(?:mathchar|char|count)def|def|global|outer|futurelet|begingroup|endgroup|ifcase|or|else|loop|repeat|newif|@ifpackageloaded|if?(?:cat|dim|eof|false|[hv]box|[hvm]mode|inner|num|odd|true|void|x)|if?[a-zA-Z@_]{0,25}|[a-zA-Z@_]{1,25}true|[a-zA-Z@_]{1,25}false|relax|let|if|fi|advance)\b/
+			begin: /\\((?:mathchar|char|count|skip|toks|dimen)def|[xeg]def|def|global|outer|futurelet|begingroup|endgroup|relax|let|advance|undefined|every?(?:cr|display|[hv]box|job|math|par))\b/
+		},
+		{ // conditionals
+			className: "operator",
+			begin: /\\(else|loop|repeat|@ifpackageloaded|if?(case|cat|dim|eof|false|[hvm]mode|inner|num|odd|true|void|x)|if@[a-zA-Z@_]{0,15}|if[a-zA-Z@_]{0,15}|[a-zA-Z@_]{1,25}true|[a-zA-Z@_]{1,25}false|if|or|fi)\b/
 		},
 		{
 			className: "section",
-			begin: /\\(csname|endcsname)/
+			begin: /\\(csname|endcsname)\b/
 		},
 		{
 			className: "title",
