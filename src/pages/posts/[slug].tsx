@@ -63,23 +63,24 @@ const Post: NextPage<Props> = ({ post }) => {
 		<>
 			<Head>
 				<style>
-					@import
-					url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
-					@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@200&display=swap');
+					{/*@import*/}
+					{/*url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');*/}
+					{/*@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@200&display=swap');*/}
+					{/*@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;600&display=swap');*/}
 				</style>
 				<title>{post.title + " | ponte-vecchio"}</title>
 				<meta name="description" content={post.description} />
 			</Head>
 			<article>
-				<h1 className="font-ibm text-5xl text-center mt-20 mb-10 text-fg font-bold">
+				<h1 className="text-5xl text-center mt-20 mb-10 text-fg font-bold">
 					{post.title}
 				</h1>
 				<div>
-					<p className="font-ibm text-1xl text-justify mb-10 text-fgalt">
+					<p className="text-1xl text-justify mb-10 text-fgalt">
 						{post.description}
 					</p>
 				</div>
-				<div className="font-ibm text-left text-fgalt text-xl">
+				<div className="text-left text-fgalt text-xl">
 					<hr className="border-black border-1 mb-2" />
 					<p className="text-sm mb-1 text-red"><sub>AUTHOR</sub></p>
 					<p className="mb-2 font-normal">{post.author}</p>
@@ -90,7 +91,7 @@ const Post: NextPage<Props> = ({ post }) => {
 
 
 				<div
-					className="px-auto py-auto mx-auto my-auto font-ibm max-w-none
+					className="px-auto py-auto mx-auto my-auto max-w-none font-firacode
 					text-fgalt2 prose text-lg
 					prose-h1:text-darkmagenta
 					prose-h2:text-magenta
@@ -115,7 +116,7 @@ const Post: NextPage<Props> = ({ post }) => {
 					prose-code:before:text-zinc
 					prose-code:after:text-zinc
 					prose-pre:text-fg
-					prose-pre:bg-magenta
+					prose-pre:bg-black
 					prose-ol:text-red
 					prose-ul:text-fgalt
 					prose-li:text-fgalt
