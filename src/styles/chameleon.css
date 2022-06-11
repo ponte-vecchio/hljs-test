@@ -39,94 +39,94 @@
     --white: #ffffff;
 }
 
-/* old chameleon */
-pre code.hljs {
-    display: block;
-    overflow-x: auto;
-    padding: .5em
-}
+/*!* old chameleon *!*/
+/*pre code.hljs {*/
+/*    display: block;*/
+/*    overflow-x: auto;*/
+/*    padding: .5em*/
+/*}*/
 
-/* code.hljs {
-    padding: 3px 5px
-} */
+/*!* code.hljs {*/
+/*    padding: 3px 5px*/
+/*} *!*/
 
 
-.hljs-keyword, .hljs-name, .hljs-section, .hljs-selector-id, .hljs-selector-tag {
-    color: var(--green90)
-}
+/*.hljs-keyword, .hljs-name, .hljs-section, .hljs-selector-id, .hljs-selector-tag {*/
+/*    color: var(--green90)*/
+/*}*/
 
-.hljs-title.function, .hljs-title.function.invoke, .hljs-title.class {
-    color: var(--darkgreen25);
-    /* font-weight: 600; */
-}
+/*.hljs-title.function, .hljs-title.function.invoke, .hljs-title.class {*/
+/*    color: var(--darkgreen50);*/
+/*    !* font-weight: 600; *!*/
+/*}*/
 
-.hljs-builtin {
-    color: var(--red);
-    /* font-weight: 600; */
-}
+/*.hljs-builtin {*/
+/*    color: var(--red);*/
+/*    !* font-weight: 600; *!*/
+/*}*/
 
-.hljs-subst, .hljs-module, .hljs-meta-keyword {
-    color: #21a4df;
-}
+/*.hljs-subst, .hljs-module, .hljs-meta-keyword {*/
+/*    color: #21a4df;*/
+/*}*/
 
-.hljs-type, .hljs-meta, .hljs-typing, .hljs-literal {
-    color: #1aad95;
-}
+/*!*.hljs-type, .hljs-meta, .hljs-typing, .hljs-literal {*!*/
+/*!*    color: #1aad95;*!*/
+/*!*}*!*/
 
-.hljs-number, .hljs-regexp, .hljs-char.escape {
-    color: #ffc107;
-}
+/*.hljs-number, .hljs-regexp, .hljs-char.escape {*/
+/*    color: #ffc107;*/
+/*}*/
 
-.hljs-title, .hljs-section {
-    color: #4eac89;
-    /* font-weight: 600; */
-}
+/*.hljs-title, .hljs-section {*/
+/*    color: #4eac89;*/
+/*    !* font-weight: 600; *!*/
+/*}*/
 
-.hljs-meta-prompt {
-    color: #73ba25;
-}
+/*.hljs-meta-prompt {*/
+/*    color: #73ba25;*/
+/*}*/
 
-.hljs-variable.constant, .hljs-doctag, .hljs-template-tag, .hljs-title.class.inherited, .hljs-operator {
-    color: #c86663;
-}
+/*.hljs-variable.constant, .hljs-doctag, .hljs-template-tag, .hljs-title.class.inherited, .hljs-operator {*/
+/*    color: #c86663;*/
+/*}*/
 
-.hljs-string, .hljs-symbol, .hljs-meta-string {
-    color: #6ab37c;
-}
+/*.hljs-string, .hljs-symbol, .hljs-meta-string {*/
+/*    color: #6ab37c;*/
+/*}*/
 
-.hljs-comment, .hljs-quote, .hljs-punctuation {
-    color: #476f7f;
-    font-style: oblique;
-}
+/*.hljs-comment, .hljs-quote, .hljs-punctuation {*/
+/*    color: #476f7f;*/
+/*    font-style: oblique;*/
+/*}*/
 
-.hljs-variable, .hljs-variable.language, .hljs-params, .hljs.template-variable, .hljs-name {
-    color: #dceec8;
-}
+/*.hljs-variable, .hljs-variable.language, .hljs-params, .hljs.template-variable, .hljs-name {*/
+/*    color: #dceec8;*/
+/*}*/
 
-.hljs-tag {
-    background: #efefef
-}
+/*.hljs-tag {*/
+/*    background: #efefef*/
+/*}*/
 
-.hljs-selector-class, .hljs-selector-attr, .hljs-selector-pseudo {
-    font-weight: 700;
-    color: var(--darkblue)
-}
+/*.hljs-selector-class, .hljs-selector-attr, .hljs-selector-pseudo {*/
+/*    font-weight: 700;*/
+/*    color: var(--darkblue)*/
+/*}*/
 
-.hljs-addition {
-    background: var(--darkcyan);
-}
+/*.hljs-addition {*/
+/*    background: var(--darkcyan);*/
+/*}*/
 
-.hljs-deletion {
-    background: var(--red);
-}
+/*.hljs-deletion {*/
+/*    background: var(--red);*/
+/*}*/
 
-.hljs-emphasis {
-    font-style: italic
-}
+/*.hljs-emphasis {*/
+/*    font-style: italic*/
+/*}*/
 
-.hljs-strong {
-    font-weight: 700
-}
+/*.hljs-strong {*/
+/*    font-weight: 700*/
+/*}*/
 
 
 /* code.hljs {
@@ -163,60 +163,76 @@ pre code.hljs {
     color: var(--yellow);
 } */
 
-.hljs-name, .hljs-strong {
-    font-weight: 700
-}
+/*.hljs-name, .hljs-strong {*/
+/*    font-weight: 700*/
+/*}*/
 
-.hljs-emphasis {
-    font-style: italic
-}
+/*.hljs-emphasis {*/
+/*    font-style: italic*/
+/*}*/
 
 
 /* ---------- */
 
+/* old chameleon */
+pre code.hljs {
+    display: block;
+    overflow-x: auto;
+    padding: .25em
+}
+
+code.hljs {
+    padding: 1px 1px;
+}
+
 .hljs {
     color: var(--fg-alt);
     background: var(--bg);
-    font-weight: 300;
-    /* display: block; */
-    /* overflow-x: auto; */
-    /* padding: 0.5em; */
 }
 
-.hljs-comment, .hljs-meta-keyword {
-    color: var(--black75);
-    font-weight: 300;
+.hljs-comment {
+    color: var(--black90);
+    font-style: italic;
 }
 
 .hljs-keyword {
     /* keyword in a regular Algol style language */
-    color: var(--green90)
+    color: var(--orange);
+}
+
+.hljs-meta {
+    color: var(--magenta);
+}
+
+.hljs-meta.keyword {
+    color: var(--darkcyan)
 }
 
 .hljs-builtin {
     /* built-in or library object (constant, class, function) */
-    color: var(--blue90)
+    color: var(--darkblue);
+    font-weight: 600;
 }
 
 .hljs-type {
     /* data type (string, int, array, etc.) */
-    color: var(--red)
+    color: #00a489;
 }
 
 .hljs-literal {
     /* special identifier for a built-in value (true, false, null etc) */
-    color: var(--green)
+    color: var(--darkgreen)
 }
 
 .hljs-number {
     /* number incl. units, modifiers if any */
     color: var(--yellow);
-    font-weight: 600;
+    font-weight: 300;
 }
 
 .hljs-operator {
     /* operators (+. -, >>, |, == etc)*/
-    color: var(--orange)
+    color: var(--fg)
 }
 
 .hljs-punctuation {
@@ -226,7 +242,7 @@ pre code.hljs {
 
 .hljs-property {
     /* object property, (obj.prop.value) */
-    color: var(--green50)
+    color: var(--blue75)
 }
 
 .hljs-regexp {
@@ -236,20 +252,30 @@ pre code.hljs {
 
 .hljs-string, .hljs-meta-string {
     /* literal string, character */
-    color: var(--cyan)
+    color: var(--green75)
 }
 
+.hljs-params {
+    /* function parameters */
+    color: var(--yellow);
+    font-weight: 300;
+}
 
 .hljs-char.escape {
     color: var(--red);
 }
 
 .hljs-variable {
-    color: var(--yellow);
+    color: var(--red);
 }
 
 .hljs-variable.constant {
-    color: var(--green);
+    color: var(--magenta);
+    font-weight: 600;
+}
+
+.hljs-title.function {
+    color: var(--red);
     font-weight: 600;
 }
 
