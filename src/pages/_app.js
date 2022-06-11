@@ -1,7 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../styles/globals.css";
 import "../styles/chameleon.css";
-// import "highlight.js/styles/xt256.css";
+// import "highlight.js/styles/default.css";
 import "fontawesome-free/css/all.css";
 import "fontawesome-free/css/all.min.css";
 
