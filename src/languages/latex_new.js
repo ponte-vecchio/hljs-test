@@ -13,7 +13,7 @@ function latex(hljs) {
 		"(?:NeedsTeXFormat|RequirePackage|GetIdInfo)",
 		"Provides(?:Expl)?(?:Package|Class|File)",
 		"(?:DeclareOption|ProcessOptions)",
-		"(?:documentclass|usepackage|input|include)",
+		"(?:documentclass|usepackage)",
 		"makeat(?:letter|other)",
 		"ExplSyntax(?:On|Off)",
 		"(?:new|renew|provide)?command",
@@ -142,7 +142,7 @@ function latex(hljs) {
 		"[hv]ss",
 		"ht",
 		"hyphen?(?:(ation|char|penalty))",
-		"if?(?:case|cat|dim|eof|[hv]mode|[hv]box|inner|true|num|odd|void|x)",
+		"if(?:case|cat|dim|eof|[hv]mode|[hv]box|inner|true|num|odd|void|x)",
 		// 'ifcase',
 		// 'ifcat',
 		// 'ifdim',
@@ -1003,94 +1003,106 @@ function latex(hljs) {
 		{ begin: /[a-zA-Z@]+/ }, // control word
 		{ begin: /[^a-zA-Z@]?/ } // control symbol
 	];
-	const DOUBLE_CARET_VARIANTS = [
-		{ className: "char.escape", begin: /\^{6}[0-9a-f]{6}/ },
-		{ className: "char.escape", begin: /\^{5}[0-9a-f]{5}/ },
-		{ className: "char.escape", begin: /\^{4}[0-9a-f]{4}/ },
-		{ className: "char.escape", begin: /\^{3}[0-9a-f]{3}/ },
-		{ className: "char.escape", begin: /\^{2}[0-9a-f]{2}/ },
-		{ className: "char.escape", begin: /\^{2}[\u0000-\u007f]/ }
-	];
+	// const DOUBLE_CARET_VARIANTS = [
+	// 	{ className: "char escape", begin: /\^{6}[0-9a-f]{6}/ },
+	// 	{ className: "char escape", begin: /\^{5}[0-9a-f]{5}/ },
+	// 	{ className: "char escape", begin: /\^{4}[0-9a-f]{4}/ },
+	// 	{ className: "char escape", begin: /\^{3}[0-9a-f]{3}/ },
+	// 	{ className: "char escape", begin: /\^{2}[0-9a-f]{2}/ },
+	// 	// { className: "char escape", begin: /\\(\^\^[a-zA-Z\d!@#$%^&*(){}_\[\]\\\/ .;:<>=?|]{1,2})/},
+	// 	// { className: "char escape", begin: /\b\\\^{2}[A-Z^_!@#$%&*()\[\]{}~`]\b/ },
+	// 	// escaped tokens
+	// 	// { className: "char escape", begin: /\b`[a-zA-Z\d!@#$%^&*(){}_\[\]\\\/ .;:<>=?|]\b/ },
+	// ];
 	const ARITHMETIC_CS = [
 		// just numbers
-		{ className: "number", begin: /\b\d+\b/ },
-		// decimals e.g. 1.0, 2.0
-		{ className: "number", begin: /\b\d+\.\d+\b/ },
-		// dot decimals e.g. .5
-		{ className: "number", begin: /\b\.\d+\b/ },
-		// number + dimen e.g. 1cm  -3.5in  0em  2fill
-		{ className: "number", begin: /\b(\d+)(pt|pc|bp|in|cm|mm|dd|cc|sp|ex|em|mu|fi[l]{1,3})\b/ },
-		{ className: "number", begin: /\b(\d+\.\d+)(pt|pc|bp|in|cm|mm|dd|cc|sp|ex|em|mu|fi[l]{1,3})\b/ },
-		{ className: "number", begin: /\b(\.\d+)(pt|pc|bp|in|cm|mm|dd|cc|sp|ex|em|mu|fi[l]{1,3})\b/ },
-		// arg + number + dimen e.g. to4em
+		{ className: "number", begin: /(?:\d+?(\.\d+)|\d+|\.\d+)\b/ },
+		// number + dimen
 		{
 			className: "number",
-			begin: /\b(to|plus|minus|height|depth|width)?\d+?(pt|pc|bp|in|cm|mm|dd|cc|sp|ex|em|mu|fi[l]{1,3})\b/
+			begin: /((?:\d+\.\d+|\d+|\.\d+)(?:p[tc]|([bs]p)|in|([cm]m)|dd|cc|e[xm]|m(?:uh|u)|fil{1,3}))/
 		},
-		{
+		{ // arg + number
 			className: "number",
-			begin: /\b(to|plus|minus|height|depth|width)?\d+\.\d+?(pt|pc|bp|in|cm|mm|dd|cc|sp|ex|em|mu|fi[l]{1,3})\b/
+			begin: /((?:(?:pl|min)us|height|(?:dep|wid)th|to)(?:\d+|\d+\.\d+|\.\d+))/
 		},
-		{
+		{ // arg + number + dimen
 			className: "number",
-			begin: /\b(to|plus|minus|height|depth|width)\.\d+?(pt|pc|bp|in|cm|mm|dd|cc|sp|ex|em|mu|fi[l]{1,3})\b/
+			begin: /(?:(?:pl|min)us|height|(?:dep|wid)th|to)?(?:\d+|\d+\.\d+|\.\d+)(?:(p[tc])|([bs]p)|in|([cm]m)|dd|cc|(e[xm])|m(?:uh|u)|fil{1,3})?/
 		},
 		//  hexadecimal
-		{ className: "number", begin: /(?:")?([\dA-F]{2,8})\b/ },
-		// ' for octal, none for decimal
-		{ className: "number", begin: /(?:')?([0-7]{2,8})\b/ },
+		{ className: "number", begin: /("+[\dA-F]{2,8})\b/ },
+		// ' for octal
+		{ className: "number", begin: /('+[0-7]{2,8})\b/ },
 		// operators
-		{ className: "literal", begin: /=/ },
-		{ className: "operator", begin: /(\+|-|\*|\/|\^|>|<|&&|&=|&)/ },
-		{ className: "operator", begin: /\\(plus|minus|multiply|divide)\b/ },
-		{ className: "number", begin: /(plus|minus|multiply|divide)\b/ }
+		{ className: "operator", begin: /=/ },
+		{ className: "operator", begin: /(!`(?:&{1,5}?(=)|\+|-|\*|\/|\|>|<|!|\?|:|^))/ },
+		{ className: "operator", begin: /\\(?:plus|minus|multiply|divide)\b/ },
+		{ className: "number", begin: /(?:plus|minus|multiply|divide)\b/ }
 	];
 	const FUNCTION_CS = [
 		{
 			className: "builtin",
-			begin: /\\(the[a-zA-Z@_]{1,99}|[a-z]{3}expr|expandafter|providecommand|protected|string|long|the)\b/
+			begin: /\\(?:the[a-zA-Z@_]{3,25}|a-z]{3}expr|expandafter|makeat(?:lett|oth)er|protected|string|long|the|leaders|end)\b/
 		},
-		{ // declarative builtins
+		{ // file I/O & Debugging
+			className: "meta string",
+			begin: /\\((?:open|close)(?:in|out)|inputlineno|(?:out|endin|in)put|read|write?(:\d{1,2})|write|typeout|immediate|shipout|(super)?eject|bye)\b/
+		},
+		{
+			className: "meta string",
+			begin: /\\(?:tracing(?:commands|lostchars|macros|online|output|pages|paragraphs|restores|stats)|show(?:box(?:breadth|depth)|box|lists|the)|show|(?:split|box)?maxdepth|err(?:message|help)|error(?:contextlines|stopmode)|meaning|message|pausing|(?:batch|scroll)mode)\b/
+		},
+		{ // Macro builtins
 			className: "builtin",
-			begin: /\\((?:mathchar|char|count|skip|toks|dimen)def|[xeg]def|def|global|outer|futurelet|begingroup|endgroup|relax|let|advance|undefined|every?(?:cr|display|[hv]box|job|math|par))\b/
+			begin: /\\(?:(?:csname|mathchar|char|count|(mu)?skip|toks|dimen|([xeg]))?def|global|outer|futurelet|(?:begin|end|[be])group|(end)?csname|relax|future|let|advance|undefined|(un)?([hv])?copy|[o@]penup)\b/
 		},
-		{ // conditionals
-			className: "operator",
-			begin: /\\(else|loop|repeat|@ifpackageloaded|if?(case|cat|dim|eof|false|[hvm]mode|inner|num|odd|true|void|x)|if@[a-zA-Z@_]{0,15}|if[a-zA-Z@_]{0,15}|[a-zA-Z@_]{1,25}true|[a-zA-Z@_]{1,25}false|if|or|fi)\b/
+		{ // Logical builtins
+			className: "title function",
+			begin: /\\(?:else|@ifpackageloaded|if(?:case|cat|dim|eof|false|[hvm]mode|inner|num|odd|true|void|x)|if([a-zA-Z_]|@){0,15}|if|or|fi)\b/,
+			relevance: 1
+		},
+		{ // Logical Macros
+			className: "variable constant",
+			begin: /\\(?:loop|repeat|next|iterate|[a-zA-Z@_]{1,25}true|[a-zA-Z@_]{1,25}false|every?(?:cr|display|[hv]box|job|math|par))\b/
 		},
 		{
-			className: "section",
-			begin: /\\(csname|endcsname)\b/
-		},
-		{
-			className: "title",
-			begin: /\\(documentclass|usepackage|begin|end)\b/
+			className: "meta keyword",
+			begin: /\\(?:documentclass|usepackage|begin|end)\b/
 		}
 	];
 	const INTERNAL_QUANTITY = [
 		{ // primitive constants for lengths
-			className: "meta keyword",
-			begin: /\\(baseline(skip|stretch)|(above|below|inter)display(shortskip|skip)|columnsep|columnwidth|evensidemargin|linewidth|oddsidemargin|paperwidth|paperheight|(?:no|display|par|hang|text)indent|indent|(line)skiplimit|(?:parfill|par|splittop|top|left|right|line|tab|xspace|space)skip|(thin|med|thick)muskip|muskip|tabcolsep|textheight|textwidth|topmargin|unitlength)\b/
+			className: "property",
+			begin: /\\((?:baseline|line)(?:skiplimit|skip|stretch|s)|(?:above|below|inter)display(?:shortskip|skip)|columnsep|columnwidth|evensidemargin|linewidth|oddsidemargin|paperwidth|paperheight|(?:no|display|par|hang|text)indent|indent|(?:parfill|par|(split)?top|left|right|(base)?line|tab|(x)?space)skip|(?:thin|med|thick)muskip|tabcolsep|textheight|textwidth|topmargin|unitlength|jot)\b/
 		},
-		{ // badness
-			className: "meta keyword",
-			begin: /\\([hv]badness|badness|(cat|sf|lc|uc)code|inputlineno|font|fontdimen|nullfont|lastskip|hyphenchar|deadcycles|lastkern|delcode|mathcode|script?font|skewchar|textfont|pagedepth|pagefil{1,3}stretch|pagegoal|pageshrink|pagestretch|pagetotal|parshape|prevgraf|spacefactor|lastpenalty|(off|no)interlineskip)\b/
-		},
-		{ // penalties
-			className: "meta.keyword",
-			begin: /\\(penalty|insertpenalties)\b/
-		},
-		{
+		{ // Character types
 			className: "type",
-			begin: /\\(counter|count[\da-zA-Z@_]{0,15}|count|dimen@[\da-zA-Z@_]{0,15}|dimen[@\d]{0,3}|dimen|muskip|skip[\d@]{1,3}|skip|toks[\d@]{1,3}|toks|accent[\d@]{0,15}|accent)\b/
-		},
-		{
-			className: "meta keyword",
-			begin: /\\new?(if|length|box|counter|count|dimen|muskip|skip|toks)\b/
+			begin: /\\((?:math|cat|sf|[lu]c)code|(?:lower|upper)case|string|romannumeral|number|(?:end|new)linechar|mathchar|char|accent)\b/
 		},
 		{
 			className: "property",
-			begin: /\\set(to(width|height|depth)|length|box|counter|count|dimen|muskip|skip|toks)\b/
+			begin: /\\(?:[hv]badness|badness|inputlineno|fontdimen|font|nullfont|lastskip|(?:left|right|ex)?hyphen?(min)|hyphenchar|deadcycles|delcode|skewchar|textfont|pagedepth|pagefil{1,3}stretch|page(?:shrink|stretch|total|goal)|parshape|prevgraf|spacefactor|(?:off|no)interlineskip|normal(?:baseline|line)(?:skiplimit|skip)|ht|dp|wd)\b/
+		},
+		{ // penalties, tolerances, demerits
+			className: "property",
+			begin: /\\(?:(?:last|(inter){0,1}line|(?:left|right|ex)?hyphen?(min)|binop|rel|club|(display)?widow|(?:pre|post)display|broken|floating|output|inter(?:display|footnote)line)?penalty|insertpenalties|(pre)?tolerance|(?:(?:double|final)hyphen|adj)demerits)\b/
+		},
+		{ // Registers
+			className: "type",
+			begin: /\\(?:counter|count[@\d]{0,3}|count[@\da-zA-Z]{1,10}|dimen[@\da-zA-Z]{1,10}|dimen|skip[\d@]{1,3}|(?:mu|hide|m)?skip|toks[\d@]{1,3}|toks|mathaccent|accent?([\d@]{1,3})|box|(?:tt|sl|bf|it)?fam|language|char?([@\d]{0,3}))/
+		},
+		{ // new IQs
+			className: "meta keyword",
+			begin: /\\new(?:if|help|length|box|counter|count|dimen|muskip|skip|toks|read|write|fam|language|insert)/
+		},
+		{ // remove IQs
+			className: "meta keyword",
+			begin: /\\remove(?:if|help|length|box|counter|count|dimen|muskip|skip|toks|read|write|fam|language)\b/
+		},
+		{ // set IQs
+			className: "meta keyword",
+			begin: /\\set(?:to(?:width|height|depth)|length|box|counter|count|dimen|muskip|skip|toks)/
 		}
 		// {
 		//     className: 'type',
@@ -1099,22 +1111,71 @@ function latex(hljs) {
 	];
 	const BUILTIN_CS = [
 		// Font control
-		{ className: "property", begin: /\\text(tt|bf|sf|sl|it|rm)\b/ },
-		{ className: "property", begin: /\\(ttfamily|sfshape|slshape|itshape|bfseries|rmshape)\b/ },
-		{ className: "property", begin: /\\(tt|sf|sl|it|bf|rm)\b/ },
+		{ className: "type", begin: /\\(?:(?:script){1,2}|text)font/ },
+		{ className: "type", begin: /\\text(?:tt|bf|sf|sl|it|rm)\b/ },
+		{ className: "type", begin: /\\(?:ttfamily|sfshape|slshape|itshape|bfseries|rmshape)\b/ },
+		{ className: "type", begin: /\\(?:mit|cal|tt|sf|sl|it|bf|rm)\b/ },
+		{ className: "title function", begin: /\\Make(?:Upper|Lower)case/ },
+		{ className: "builtin", begin: /\\(?:[lr](?:q|brack|matho(?:rd|p))|leavevmode)\b/ },
 		// Font size
-		{ className: "property", begin: /\\((script|footnote|normal)size|[lL]arge|LARGE|[hH]uge|tiny|small)\b/ }
+		{ className: "property", begin: /\\(?:(?:script|footnote|normal)size|[lL]arge|LARGE|[hH]uge|tiny|small)\b/ },
+		// Positioning
+		{ className: "property", begin: /\\(?:centering|[hv]phantom|phantom|raise|lower)\b/ },
+		// Misc
+		{ className: "string", begin: /\\(?:copyright|A[AE]|a[ae]|OE|oe|ss|[iOlLHvut])\b/ },
+		// Maths - primitives
+		{
+			className: "property",
+			begin: /\\(mathhexbox([@\dA-F]{0,3})|mathhexbox|m@th)\b/
+		},
+		{
+			className: "string",
+			relevance: 1,
+			begin: /\\(?:(?:[Ll]eft|[Rr]ight|[Ll]ong|over|hook)?(?:leftright|right|left)?arrow|(?:left|right)harpoon(?:down|up)|[ij]math|partial|(?:over|under)brace|emptyset|[bB]ig{1,2}([lrm])?|[bB]ig{1,2}|r[o@]{2}t|brac[ke]|[rl](?:moustache|group|brace|floor|ceil|hook|lap)|(?:[bn]|ln)ot|hbar|top|bigtriangle(?:down|up)|triangle(?:right|left)|(?:tri|[rl])?angle|(?:[aA]rrow|brace)vert|(?:[uU]p(down)?|[dD]own)arrow|forall|backslash|exists|natural|(?:diamond|club|spade|heart)suit|parallel|bullet|diamond|setminus|joinrel|[rR]elbar|mapstochar|smallint|(?:oi|i)(?:ntop|nt)|coprod|big(?:wedge|vee|[ou](?:times|plus|dot)|(?:times|c[ua]p|dot)|sqcup|circ)|(?:sim|succ|prec)(eq)?|[ou](?:slash|times|minus|plus)|[co]dot|sq(?:c[au]p|su[bp]seteq)|su[bp](?:seteq|set)|c[au]p|nolimits|bowtie|choose|n@space|(?:(script){1,2}|display)style|([sn][we])arrow|[lgn](?:eq|or|and|e)|([dchvlr])?dot([sp])?|models|approx|right|left|doteq|equiv|perp|aleph|amalg|prime|nabla|infty|wedge|times|asymp|smile|sqrt|colon|frown|check|smash|dashv|vdash|skew|sharp|owns|[vV]ert|circ|star|surd|flat|gets|prod|sum|[gl]{2}|[pm]{2}|d(?:(d)?ag(ger)?|iv)|(wide)?(?:tilde|hat|breve|acute|grave|bar)|ve[ce]|ast|ell|mid|neg|w[pr]|Re|Im|ni|in|(?:prop|(?:long|set)?maps)?to|over|atop|iff|mathrel|[SPcbd]|Orb|TeX)\b/
+		},
+		{ // Maths - Operators
+			className: "string",
+			begin: /\\(?:l(?:og|im(?:sup|inf)?|n)|brace[lrud]{2}|arc(?:sin|cos|tan)|(?:sin|co[st]|tan)(h)?|(?:cs|se)c|m(?:ax|in)|sup|inf|arg|rad|de[gt]|ker|dim|hom|exp|gcd|Pr)\b/
+		},
+		{ // Maths - Greek primitives
+			className: "string",
+			begin: /\\(?:alpha|(?:[bB]|[zZ]|[tT]h)?eta|[gG]amma|[dD]elta|[lL]ambda|[eEuU]psilon|[iI]ota|[kK]appa|[mMnN]u|(?:[pP]s|[pP]|[xX]|[pPcC]h|var(?:ph|p))i|var(?:epsilon|theta|sigma|rho)|[rR]ho|[sS]igma|[oO]mega|[tT]au)\b/
+		}
 	];
 	const TEX_SPACING_CS = [
 		{
-			className: "meta keyword",
-			begin: /\\([hv]top|[hvmfp]box|un[hv]box|[hv]ss|[hv]size|[hv]skip|[hv]space|[hv]fil|[hv]fill|par|cr{1,2}|(small|med|large)skip|\\)\b/
+			className: "property",
+			begin: /\\(?:(?:(non)?french|normal)spacing|[hv](?:glue|top|size|filneg|fil{1,2}|fuzz|ss)|[hvmfp]box|un[hv]box|par|(?:small|large|last|[eu]n|med|big|[hvm])(?:skipamount|skip)|displaywidth|(?:[hv]|negthin|thin|en)space|q{1,2}uad|space|empty|null|(end)?graf)\b/
+		},
+		{ // tables
+			className: "property",
+			begin: /\\(?:everycr|(cr){1,2}|(?:o{1,2}|no|[hvi])align|omit|strut|span|tabskip|sh@ft|hidewidth)\b/
+		},
+		{ // breaks
+			className: "property",
+			begin: /\\((?:no|allow|small|med|big)break|break|endline)\b/
+		},
+		{ // special break
+			className: "literal",
+			relevance: 1,
+			begin: /!(`)\\(?:s[pb]|,|;|!)\b/
+		},
+		{ // fills and rules
+			className: "property",
+			begin: /\\(?:(?:[hv]rule|(?:right|left)arrow|(?:up|down)brace|dot)fill|[hv]rule)\b/
 		}
 	];
-	const CONTROL_SEQUENCE = {
-		className: "keyword",
+	const SPECIAL_ESCAPES = [
+		{ // ^^
+			className: "char escape",
+			relevance: 1,
+			begin: /(\\)?\^{2}[a-zA-Z@\[\]\\^_?]/
+		}
+	];
+	const PRIMITIVES = {
+		className: "literal",
 		begin: /\\/,
-		relevance: 0,
+		relavance: 0,
 		contains: [
 			{
 				endsParent: true,
@@ -1135,7 +1196,14 @@ function latex(hljs) {
 			{
 				endsParent: true,
 				begin: LUATEX_PRIMITIVES
-			},
+			}
+		]
+	};
+	const CONTROL_SEQUENCE = {
+		className: "keyword",
+		begin: /\\/,
+		relevance: 0,
+		contains: [
 			{
 				endsParent: true,
 				begin: KNOWN_CONTROL_WORDS
@@ -1146,7 +1214,7 @@ function latex(hljs) {
 			},
 			{
 				endsParent: true,
-				variants: DOUBLE_CARET_VARIANTS
+				variants: SPECIAL_ESCAPES
 			},
 			{
 				endsParent: true,
@@ -1156,16 +1224,16 @@ function latex(hljs) {
 		]
 	};
 	const MACRO_PARAM = {
-		className: "variable",
+		className: "params",
 		relevance: 0,
 		begin: /#+\d?/
 	};
 	const DOUBLE_CARET_CHAR = {
-		// relevance: 1
-		variants: DOUBLE_CARET_VARIANTS
+		// relevance: 0,
+		variants: SPECIAL_ESCAPES
 	};
 	const SPECIAL_CATCODE = {
-		className: "built_in",
+		className: "operator",
 		relevance: 0,
 		begin: /[$&^_]/
 	};
@@ -1181,11 +1249,16 @@ function latex(hljs) {
 		{ relevance: 0 }
 	);
 	const EVERYTHING_BUT_VERBATIM = [
-		ARITHMETIC_CS, FUNCTION_CS, BUILTIN_CS, TEX_SPACING_CS,
+		ARITHMETIC_CS,
+		FUNCTION_CS,
+		BUILTIN_CS,
+		TEX_SPACING_CS,
+		SPECIAL_ESCAPES,
 		INTERNAL_QUANTITY,
 		CONTROL_SEQUENCE,
+		PRIMITIVES,
 		MACRO_PARAM,
-		DOUBLE_CARET_CHAR,
+		// DOUBLE_CARET_CHAR,
 		SPECIAL_CATCODE,
 		MAGIC_COMMENT,
 		COMMENT
@@ -1238,7 +1311,7 @@ function latex(hljs) {
 	};
 	const CSNAME = function(csname, starts_mode) {
 		return {
-			begin: "\\\\" + csname + "(?![a-zA-Z@:_])",
+			begin: "\\\\" + csname + "(?![\da-zA-Z@:_])",
 			keywords: {
 				$pattern: /\\[a-zA-Z]+/,
 				keyword: "\\" + csname
@@ -1251,6 +1324,7 @@ function latex(hljs) {
 	const BEGIN_ENV = function(envname, starts_mode) {
 		return hljs.inherit(
 			{
+				className: "meta",
 				begin: "\\\\begin(?=[ \t]*(\\r?\\n[ \t]*)?\\{" + envname + "\\})",
 				keywords: {
 					$pattern: /\\[a-zA-Z]+/,
@@ -1261,7 +1335,18 @@ function latex(hljs) {
 			ARGUMENT_AND_THEN(ARGUMENT_M, starts_mode)
 		);
 	};
-	const VERBATIM_DELIMITED_EQUAL = (innerName = "string") => {
+	const MATHMODE_DELIITED = (innerName = "literal") => {
+		return hljs.END_SAME_AS_BEGIN({
+			className: "char escape",
+			relevance: 1,
+			begin: /(.\${1,2}\r?\n)/,
+			end: /(.\${1,2}\r?\n)/,
+			excludeBegin: true,
+			excludeEnd: true,
+			endsParent: true
+		});
+	};
+	const VERBATIM_DELIMITED_EQUAL = (innerName = "literal") => {
 		return hljs.END_SAME_AS_BEGIN({
 			className: innerName,
 			begin: /(.|\r?\n)/,
@@ -1278,7 +1363,7 @@ function latex(hljs) {
 		};
 	};
 
-	const VERBATIM_DELIMITED_BRACES = (innerName = "string") => {
+	const VERBATIM_DELIMITED_BRACES = (innerName = "literal") => {
 		return {
 			relevance: 0,
 			begin: /\{/,
@@ -1304,10 +1389,10 @@ function latex(hljs) {
 	};
 	const VERBATIM = [
 		...[
-			"verb",
-			"lstinline"
-		].map(csname => CSNAME(csname, { contains: [VERBATIM_DELIMITED_EQUAL()] })),
-		CSNAME("mint", ARGUMENT_AND_THEN(ARGUMENT_M, { contains: [VERBATIM_DELIMITED_EQUAL()] })),
+			"verb", "verbatim", "verbatim*",
+			"lstinline", "lstlisting", "lstlisting*"
+		].map(csname => CSNAME(csname, { contains: [VERBATIM_DELIMITED_EQUAL(), MATHMODE_DELIITED()] })),
+		CSNAME("mint", ARGUMENT_AND_THEN(ARGUMENT_M, { contains: [VERBATIM_DELIMITED_EQUAL(), MATHMODE_DELIITED()] })),
 		CSNAME("mintinline", ARGUMENT_AND_THEN(ARGUMENT_M, {
 			contains: [
 				VERBATIM_DELIMITED_BRACES(),
