@@ -15,7 +15,6 @@ function latex(hljs) {
 		"(?:DeclareOption|ProcessOptions)",
 		"(?:documentclass|usepackage)",
 		"makeat(?:letter|other)",
-		"ExplSyntax(?:On|Off)",
 		"(?:new|renew|provide)?command",
 		"(?:re)newenvironment",
 		"(?:New|Renew|Provide|Declare)(?:Expandable)?DocumentCommand",
@@ -978,6 +977,7 @@ function latex(hljs) {
 		"xtokspre"
 	].map(word => word + "(?![a-zA-Z@:_])"));
 	const L3_REGEX = new RegExp([
+		"ExplSyntax(?:On|Off)",
 		// A function \module_function_name:signature or \__module_function_name:signature,
 		// where both module and function_name need at least two characters and
 		// function_name may contain single underscores.
@@ -1020,7 +1020,7 @@ function latex(hljs) {
 		// number + dimen
 		{
 			className: "number",
-			begin: /((?:\d+\.\d+|\d+|\.\d+)(?:p[tc]|([bs]p)|in|([cm]m)|dd|cc|e[xm]|m(?:uh|u)|fil{1,3}))/
+			begin: /((?:\d+\.\d+|\d+|\.\d+)(?:p[tc]|[bs]p|in|[cm]m|dd|cc|e[xm]|m(?:uh|u)|fil{1,3}))/
 		},
 		{ // arg + number
 			className: "number",
@@ -1028,7 +1028,7 @@ function latex(hljs) {
 		},
 		{ // arg + number + dimen
 			className: "number",
-			begin: /(?:(?:pl|min)us|height|(?:dep|wid)th|to)?(?:\d+|\d+\.\d+|\.\d+)(?:(p[tc])|([bs]p)|in|([cm]m)|dd|cc|(e[xm])|m(?:uh|u)|fil{1,3})?/
+			begin: /((?:(?:pl|min)us|height|(?:dep|wid)th|to)(?:\d+|\d+\.\d+|\.\d+)(?:p[tc]|[bs]p|in|[cm]m|dd|cc|e[xm]|m(?:uh|u)|fil{1,3}))/
 		},
 		//  hexadecimal
 		{ className: "number", begin: /("+[\dA-F]{2,8})\b/ },
@@ -1037,8 +1037,8 @@ function latex(hljs) {
 		// operators
 		{ className: "operator", begin: /=/ },
 		{ className: "operator", begin: /(!`(?:&{1,5}?(=)|\+|-|\*|\/|\|>|<|!|\?|:|^))/ },
-		{ className: "operator", begin: /\\(?:plus|minus|multiply|divide)\b/ },
-		{ className: "number", begin: /(?:plus|minus|multiply|divide)\b/ }
+		{ className: "operator", begin: /\\(?:plus|minus|multiply|divide|scaled)\b/ },
+		{ className: "operator", begin: /\b(?:plus|minus|multiply|divide|scaled)\b/ }
 	];
 	const FUNCTION_CS = [
 		{
@@ -1122,7 +1122,7 @@ function latex(hljs) {
 		// Positioning
 		{ className: "property", begin: /\\(?:centering|[hv]phantom|phantom|raise|lower)\b/ },
 		// Misc
-		{ className: "string", begin: /\\(?:copyright|A[AE]|a[ae]|OE|oe|ss|[iOlLHvut])\b/ },
+		{ className: "string", begin: /\\(?:copyright|A[AE]|a[ae]|OE|oe|ss|[ijOlLHvut])\b/ },
 		// Maths - primitives
 		{
 			className: "property",
@@ -1131,11 +1131,17 @@ function latex(hljs) {
 		{
 			className: "string",
 			relevance: 1,
-			begin: /\\(?:(?:[Ll]eft|[Rr]ight|[Ll]ong|over|hook)?(?:leftright|right|left)?arrow|(?:left|right)harpoon(?:down|up)|[ij]math|partial|(?:over|under)brace|emptyset|[bB]ig{1,2}([lrm])?|[bB]ig{1,2}|r[o@]{2}t|brac[ke]|[rl](?:moustache|group|brace|floor|ceil|hook|lap)|(?:[bn]|ln)ot|hbar|top|bigtriangle(?:down|up)|triangle(?:right|left)|(?:tri|[rl])?angle|(?:[aA]rrow|brace)vert|(?:[uU]p(down)?|[dD]own)arrow|forall|backslash|exists|natural|(?:diamond|club|spade|heart)suit|parallel|bullet|diamond|setminus|joinrel|[rR]elbar|mapstochar|smallint|(?:oi|i)(?:ntop|nt)|coprod|big(?:wedge|vee|[ou](?:times|plus|dot)|(?:times|c[ua]p|dot)|sqcup|circ)|(?:sim|succ|prec)(eq)?|[ou](?:slash|times|minus|plus)|[co]dot|sq(?:c[au]p|su[bp]seteq)|su[bp](?:seteq|set)|c[au]p|nolimits|bowtie|choose|n@space|(?:(script){1,2}|display)style|([sn][we])arrow|[lgn](?:eq|or|and|e)|([dchvlr])?dot([sp])?|models|approx|right|left|doteq|equiv|perp|aleph|amalg|prime|nabla|infty|wedge|times|asymp|smile|sqrt|colon|frown|check|smash|dashv|vdash|skew|sharp|owns|[vV]ert|circ|star|surd|flat|gets|prod|sum|[gl]{2}|[pm]{2}|d(?:(d)?ag(ger)?|iv)|(wide)?(?:tilde|hat|breve|acute|grave|bar)|ve[ce]|ast|ell|mid|neg|w[pr]|Re|Im|ni|in|(?:prop|(?:long|set)?maps)?to|over|atop|iff|mathrel|[SPcbd]|Orb|TeX)\b/
+			begin: /\\(?:(?:[Ll]eft|[Rr]ight|[Ll]ong|over|hook)?(?:leftright|right|left)?arrow|(?:left|right)harpoon(?:down|up)|[ij]math|partial|(?:over|under)brace|emptyset|[bB]ig{1,2}([lrm])?|[bB]ig{1,2}|r[o@]{2}t|brac[ke]|[rl](?:moustache|group|brace|floor|ceil|hook|lap)|(?:[bn]|ln)ot|hbar|top|bigtriangle(?:down|up)|triangle(?:right|left)|(?:tri|[rl])?angle|(?:[aA]rrow|brace)vert|(?:[uU]p(down)?|[dD]own)arrow|forall|backslash|exists|natural|radical|(?:diamond|club|spade|heart)suit|parallel|bullet|diamond|setminus|joinrel|[rR]elbar|mapstochar|smallint|(?:oi|i)(?:ntop|nt)|coprod|big(?:wedge|vee|[ou](?:times|plus|dot)|(?:times|c[ua]p|dot)|sqcup|circ)|(?:sim|succ|prec)(eq)?|[ou](?:slash|times|minus|plus)|[co]dot|sq(?:c[au]p|su[bp]seteq)|su[bp](?:seteq|set)|c[au]p|nolimits|math(?:bb|bf|sf|tt|rm|it)|bowtie|choose|n@space|(?:(script){1,2}|display)style|([sn][we])arrow|[lgn](?:eq|or|and|e)|([dchvlr])?dot([sp])?|models|approx|right|left|doteq|equiv|perp|aleph|amalg|prime|nabla|infty|wedge|times|asymp|smile|sqrt|colon|frown|check|smash|dashv|vdash|skew|sharp|owns|[vV]ert|circ|star|surd|flat|gets|prod|sum|[gl]{2}|[pm]{2}|d(?:(d)?ag(ger)?|iv)|(wide)?(?:tilde|hat|breve|acute|grave|bar)|ve[ce]|ast|ell|mid|neg|w[pr]|Re|Im|ni|in|(?:prop|(?:long|set)?maps)?to|over|atop|iff|math(?:rel|op(en)?|close)|[SPcbd]|Orb|(La)?TeX)\b/
 		},
 		{ // Maths - Operators
 			className: "string",
 			begin: /\\(?:l(?:og|im(?:sup|inf)?|n)|brace[lrud]{2}|arc(?:sin|cos|tan)|(?:sin|co[st]|tan)(h)?|(?:cs|se)c|m(?:ax|in)|sup|inf|arg|rad|de[gt]|ker|dim|hom|exp|gcd|Pr)\b/
+		},
+		{
+			// Maths - Operator Symbols
+			className: "operator",
+			relevance: 0,
+			begin: /\b([\^_+\-*&=<>()])\b/
 		},
 		{ // Maths - Greek primitives
 			className: "string",
@@ -1143,6 +1149,11 @@ function latex(hljs) {
 		}
 	];
 	const TEX_SPACING_CS = [
+		{ // ~ as active but not \~
+			className: "literal",
+			relevance: 1,
+			begin: /!(\\)~/
+		},
 		{
 			className: "property",
 			begin: /\\(?:(?:(non)?french|normal)spacing|[hv](?:glue|top|size|filneg|fil{1,2}|fuzz|ss)|[hvmfp]box|un[hv]box|par|(?:small|large|last|[eu]n|med|big|[hvm])(?:skipamount|skip)|displaywidth|(?:[hv]|negthin|thin|en)space|q{1,2}uad|space|empty|null|(end)?graf)\b/
@@ -1156,9 +1167,9 @@ function latex(hljs) {
 			begin: /\\((?:no|allow|small|med|big)break|break|endline)\b/
 		},
 		{ // special break
-			className: "literal",
+			className: "string",
 			relevance: 1,
-			begin: /!(`)\\(?:s[pb]|,|;|!)\b/
+			begin: /\\(?:s[pb]|,|;|!)\b/
 		},
 		{ // fills and rules
 			className: "property",
@@ -1166,14 +1177,46 @@ function latex(hljs) {
 		}
 	];
 	const SPECIAL_ESCAPES = [
-		{ // ^^
+		{ // ^^ single tokens
 			className: "char escape",
-			relevance: 1,
+			relevance: 10,
 			begin: /(\\)?\^{2}[a-zA-Z@\[\]\\^_?]/
+		},
+		{ // ^^ double tokens
+			className: "char escape",
+			relevance: 2,
+			begin: /\^{2}[a-f\d]{3}/
+		},
+		{ // LuaTeX ^^^^ tokens
+			className: "char escape",
+			relevance: 2,
+			begin: /\^{4}[a-f\d]{4}/
+		},
+		{ // LuaTeX ^^^^^^ tokens
+			className: "char escape",
+			relevance: 2,
+			begin: /\^{6}[a-f\d]{6}/
+		},
+		{ // Special characters
+			className: "string",
+			relevance: 2,
+			begin: /\\([`'=^."~<>\[\]{}()!?,;:*+/_\\\- |$&%#])/
+
+		}
+	];
+	const LATEX_BUILTINS = [
+		{
+			className: "title function",
+			relevance: 0,
+			begin: /\\((re)?newcommand)/
+		},
+		{
+			className: "title",
+			begin: /\\(?:part|chapter|(sub)?section)/
 		}
 	];
 	const PRIMITIVES = {
-		className: "literal",
+		className: "keyword",
 		begin: /\\/,
 		relavance: 0,
 		contains: [
@@ -1209,6 +1252,8 @@ function latex(hljs) {
 				begin: KNOWN_CONTROL_WORDS
 			},
 			{
+				// className: "literal",
+				relevance: 1,
 				endsParent: true,
 				begin: L3_REGEX
 			},
@@ -1249,14 +1294,15 @@ function latex(hljs) {
 		{ relevance: 0 }
 	);
 	const EVERYTHING_BUT_VERBATIM = [
-		ARITHMETIC_CS,
+		SPECIAL_ESCAPES,
 		FUNCTION_CS,
 		BUILTIN_CS,
+		LATEX_BUILTINS,
 		TEX_SPACING_CS,
-		SPECIAL_ESCAPES,
-		INTERNAL_QUANTITY,
 		CONTROL_SEQUENCE,
+		INTERNAL_QUANTITY,
 		PRIMITIVES,
+		ARITHMETIC_CS,
 		MACRO_PARAM,
 		// DOUBLE_CARET_CHAR,
 		SPECIAL_CATCODE,
@@ -1265,7 +1311,7 @@ function latex(hljs) {
 	];
 	const BRACE_GROUP_NO_VERBATIM = {
 		begin: /\{/,
-		end: /\}/,
+		end: /}/,
 		relevance: 0,
 		contains: [
 			"self",
@@ -1285,7 +1331,7 @@ function latex(hljs) {
 	);
 	const ARGUMENT_BRACKETS = {
 		begin: /\[/,
-		end: /\]/,
+		end: /]/,
 		endsParent: true,
 		relevance: 0,
 		contains: [
@@ -1335,12 +1381,12 @@ function latex(hljs) {
 			ARGUMENT_AND_THEN(ARGUMENT_M, starts_mode)
 		);
 	};
-	const MATHMODE_DELIITED = (innerName = "literal") => {
+	const MATHMODE_DELIMITED = (innerName = "literal") => {
 		return hljs.END_SAME_AS_BEGIN({
 			className: "char escape",
 			relevance: 1,
-			begin: /(.\${1,2}\r?\n)/,
-			end: /(.\${1,2}\r?\n)/,
+			begin: /(.(?:\${1,2}|\\\[||\\\()\r?\n)/,
+			end: /(.(?:\${1,2}|\\\]|\\\))\r?\n)/,
 			excludeBegin: true,
 			excludeEnd: true,
 			endsParent: true
@@ -1372,12 +1418,12 @@ function latex(hljs) {
 				contains: [
 					{
 						className: innerName,
-						end: /(?=\})/,
+						end: /(?=})/,
 						endsParent: true,
 						contains: [
 							{
 								begin: /\{/,
-								end: /\}/,
+								end: /}/,
 								relevance: 0,
 								contains: ["self"]
 							}
@@ -1389,10 +1435,14 @@ function latex(hljs) {
 	};
 	const VERBATIM = [
 		...[
-			"verb", "verbatim", "verbatim*",
-			"lstinline", "lstlisting", "lstlisting*"
-		].map(csname => CSNAME(csname, { contains: [VERBATIM_DELIMITED_EQUAL(), MATHMODE_DELIITED()] })),
-		CSNAME("mint", ARGUMENT_AND_THEN(ARGUMENT_M, { contains: [VERBATIM_DELIMITED_EQUAL(), MATHMODE_DELIITED()] })),
+			"verb", "verbatim", "verbatim*", "lstinline", "lstlisting", "lstlisting*"
+		].map(csname => CSNAME(csname, { contains: [VERBATIM_DELIMITED_EQUAL(), MATHMODE_DELIMITED()] })),
+		CSNAME("mint", ARGUMENT_AND_THEN(ARGUMENT_M, {
+			contains: [
+				VERBATIM_DELIMITED_EQUAL(),
+				MATHMODE_DELIMITED()
+			]
+		})),
 		CSNAME("mintinline", ARGUMENT_AND_THEN(ARGUMENT_M, {
 			contains: [
 				VERBATIM_DELIMITED_BRACES(),
@@ -1411,6 +1461,7 @@ function latex(hljs) {
 			"",
 			"\\*"
 		].map(suffix => [
+			BEGIN_ENV("verb" + suffix, VERBATIM_DELIMITED_ENV("verbatim" + suffix)),
 			BEGIN_ENV("verbatim" + suffix, VERBATIM_DELIMITED_ENV("verbatim" + suffix)),
 			BEGIN_ENV("filecontents" + suffix, ARGUMENT_AND_THEN(ARGUMENT_M, VERBATIM_DELIMITED_ENV("filecontents" + suffix))),
 			...[
