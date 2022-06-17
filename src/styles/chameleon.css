@@ -186,7 +186,7 @@ code.hljs {
 }
 
 .hljs {
-    color: var(--fg-alt);
+    color: var(--black50);
     background: var(--bg);
 }
 
@@ -197,7 +197,7 @@ code.hljs {
 
 .hljs-keyword {
     /* keyword in a regular Algol style language */
-    color: var(--orange);
+    color: var(--green50);
 }
 
 .hljs-meta {
@@ -210,7 +210,7 @@ code.hljs {
 
 .hljs-builtin {
     /* built-in or library object (constant, class, function) */
-    color: var(--darkblue);
+    color: var(--yellow);
     font-weight: 600;
 }
 
@@ -226,13 +226,13 @@ code.hljs {
 
 .hljs-number {
     /* number incl. units, modifiers if any */
-    color: var(--yellow);
-    font-weight: 300;
+    color: var(--fg-alt);
+    font-weight: 100;
 }
 
 .hljs-operator {
     /* operators (+. -, >>, |, == etc)*/
-    color: var(--fg)
+    color: var(--orange)
 }
 
 .hljs-punctuation {
@@ -275,7 +275,7 @@ code.hljs {
 }
 
 .hljs-title.function {
-    color: var(--red);
+    color: var(--green75);
     font-weight: 600;
 }
 
