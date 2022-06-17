@@ -8,7 +8,7 @@ description: "Highlight.js's Test for Detecting LaTeX syntax"
 ---
 [[source]](https://github.com/highlightjs/highlight.js/blob/main/test/detect/latex/default.txt)
 
-````latex
+```latex
 % !TeX encoding = utf8
 \documentclass{article}
 
