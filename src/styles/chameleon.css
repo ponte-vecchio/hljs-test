@@ -226,13 +226,13 @@ code.hljs {
 
 .hljs-number {
     /* number incl. units, modifiers if any */
-    color: var(--fg-alt);
+    color: var(--white);
     font-weight: 100;
 }
 
 .hljs-operator {
     /* operators (+. -, >>, |, == etc)*/
-    color: var(--orange)
+    color: var(--fg-alt)
 }
 
 .hljs-punctuation {
@@ -242,7 +242,7 @@ code.hljs {
 
 .hljs-property {
     /* object property, (obj.prop.value) */
-    color: var(--blue75)
+    color: var(--blue90)
 }
 
 .hljs-regexp {
@@ -257,7 +257,7 @@ code.hljs {
 
 .hljs-params {
     /* function parameters */
-    color: var(--yellow);
+    color: var(--orange);
     font-weight: 300;
 }
 
@@ -275,7 +275,7 @@ code.hljs {
 }
 
 .hljs-title.function {
-    color: var(--green75);
+    color: var(--blue50);
     font-weight: 600;
 }
 

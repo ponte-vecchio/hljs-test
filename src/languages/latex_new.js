@@ -1014,21 +1014,31 @@ function latex(hljs) {
 	// 	// escaped tokens
 	// 	// { className: "char escape", begin: /\b`[a-zA-Z\d!@#$%^&*(){}_\[\]\\\/ .;:<>=?|]\b/ },
 	// ];
-	const ARITHMETIC_CS = [
-		// just numbers
-		{ className: "number", begin: /(?:\d+?(\.\d+)|\d+|\.\d+)\b/ },
+
+	// NUMBERS
+	const OCTAL_CONSTANT = /[0-7]{1,12}/;
+	const HEXADECIMAL_CONSTANT = /[\dA-F]{1,12}/;
+	const INTEGER_CONSTANT = /\d{1,12}/;
+	const NUM_DIMEN_GLUES = [
+		// <*space><*sign><*space><Unsigned Number>
+		{
+			className: "number",
+			begin: /\s?[+-]?\s?(?:(^['"])?(\d)?[.,]?(\d{1,20})+|'[0-7]{1,20}?[.,]?([0-7]{1,20})?|"[A-F\d]{1,20}?[.,]?([\dA-F]{1,20})?)/
+		},
+
 		// number + dimen
 		{
 			className: "number",
-			begin: /((?:\d+\.\d+|\d+|\.\d+)(?:p[tc]|[bs]p|in|[cm]m|dd|cc|e[xm]|m(?:uh|u)|fil{1,3}))/
+			begin: /\s?[+-]?\s?(?:(^['"])\d?[.,]?\d+|'[0-7]?[.,]?([0-7]{1,20})?|"[A-F\d]{1,20}?[.,]?([\dA-F]{1,20})?)\s?(true)?/,
+			end: /(p[tc]|[bs]p|in|[cm]m|dd|cc|e[xm]|m(uh|u)|fi[l]{1,3})/
 		},
 		{ // arg + number
 			className: "number",
-			begin: /((?:(?:pl|min)us|height|(?:dep|wid)th|to)(?:\d+|\d+\.\d+|\.\d+))/
+			begin: /(((pl|min)us|height|(dep|wid)th|to)\s?(?:(^['"])?(\d)?[.,]?(\d{1,20})+|'[0-7]{1,20}?[.,]?([0-7]{1,20})?|"[A-F\d]{1,20}?[.,]?([\dA-F]{1,20})?))/
 		},
 		{ // arg + number + dimen
 			className: "number",
-			begin: /((?:(?:pl|min)us|height|(?:dep|wid)th|to)(?:\d+|\d+\.\d+|\.\d+)(?:p[tc]|[bs]p|in|[cm]m|dd|cc|e[xm]|m(?:uh|u)|fil{1,3}))/
+			begin: /(((pl|min)us|height|(dep|wid)th|to)\s?(?:(^['"])?(\d)?[.,]?(\d{1,20})+|'[0-7]{1,20}?[.,]?([0-7]{1,20})?|"[A-F\d]{1,20}?[.,]?([\dA-F]{1,20})?)(p[tc]|[bs]p|in|[cm]m|dd|cc|e[xm]|m(uh|u)|fi[l]{1,3}))/
 		},
 		//  hexadecimal
 		{ className: "number", begin: /("+[\dA-F]{2,8})\b/ },
@@ -1302,7 +1312,7 @@ function latex(hljs) {
 		CONTROL_SEQUENCE,
 		INTERNAL_QUANTITY,
 		PRIMITIVES,
-		ARITHMETIC_CS,
+		NUM_DIMEN_GLUES,
 		MACRO_PARAM,
 		// DOUBLE_CARET_CHAR,
 		SPECIAL_CATCODE,

@@ -98,6 +98,7 @@ code.hljs {
 .hljs-number {
     /* number incl. units, modifiers if any */
     background-color: #4eac89;
+    color: var(--yellow);
     font-weight: 600;
 }
 
@@ -110,6 +111,11 @@ code.hljs {
 .hljs-punctuation {
     /* auxiliary punctuation (use subtle colours) */
     background-color: var(--fg-alt)
+}
+
+.hljs-title.function {
+    background-color: var(--green75);
+    font-weight: 600;
 }
 
 .hljs-property {
