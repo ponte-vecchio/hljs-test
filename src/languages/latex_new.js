@@ -1137,7 +1137,7 @@ function latex(hljs) {
 		{
 			className: "string",
 			relevance: 1,
-			begin: /\\(?:(?:[Ll]eft|[Rr]ight|[Ll]ong|over|hook)?(?:leftright|right|left)?arrow|(?:left|right)harpoon(?:down|up)|[ij]math|partial|(?:over|under)brace|emptyset|[bB]ig{1,2}([lrm])?|[bB]ig{1,2}|r[o@]{2}t|brac[ke]|[rl](?:moustache|group|brace|floor|ceil|hook|lap)|(?:[bn]|ln)ot|hbar|top|bigtriangle(?:down|up)|triangle(?:right|left)|(?:tri|[rl])?angle|(?:[aA]rrow|brace)vert|(?:[uU]p(down)?|[dD]own)arrow|forall|backslash|exists|natural|radical|(?:diamond|club|spade|heart)suit|parallel|bullet|diamond|setminus|joinrel|[rR]elbar|mapstochar|smallint|(?:oi|i)(?:ntop|nt)|coprod|big(?:wedge|vee|[ou](?:times|plus|dot)|(?:times|c[ua]p|dot)|sqcup|circ)|(?:sim|succ|prec)(eq)?|[ou](?:slash|times|minus|plus)|[co]dot|sq(?:c[au]p|su[bp]seteq)|su[bp](?:seteq|set)|c[au]p|nolimits|math(?:bb|bf|sf|tt|rm|it)|bowtie|choose|n@space|(?:(script){1,2}|display)style|([sn][we])arrow|[lgn](?:eq|or|and|e)|([dchvlr])?dot([sp])?|models|approx|right|left|doteq|equiv|perp|aleph|amalg|prime|nabla|infty|wedge|times|asymp|smile|sqrt|colon|frown|check|smash|dashv|vdash|skew|sharp|owns|[vV]ert|circ|star|surd|flat|gets|prod|sum|[gl]{2}|[pm]{2}|d(?:(d)?ag(ger)?|iv)|(wide)?(?:tilde|hat|breve|acute|grave|bar)|ve[ce]|ast|ell|mid|neg|w[pr]|Re|Im|ni|in|(?:prop|(?:long|set)?maps)?to|over|atop|iff|math(?:rel|op(en)?|close)|[SPcbd]|Orb|(La)?TeX)\b/
+			begin: /\\(?:(?:[Ll]eft|[Rr]ight|[Ll]ong|over|hook)?(leftright|right|left)?arrow|(left|right)harpoon(down|up)|[ij]math|partial|(over|under)brace|emptyset|[bB]ig{1,2}([lrm])?|[bB]ig{1,2}|r[o@]{2}t|brac[ke]|[rl](?:moustache|group|brace|floor|ceil|hook|lap)|(?:[bn]|ln)ot|hbar|top|bigtriangle(?:down|up)|triangle(?:right|left)|(?:tri|[rl])?angle|(?:[aA]rrow|brace)vert|(?:[uU]p(down)?|[dD]own)arrow|forall|backslash|exists|natural|radical|(?:diamond|club|spade|heart)suit|parallel|bullet|diamond|setminus|joinrel|[rR]elbar|mapstochar|smallint|(?:oi|i)(?:ntop|nt)|coprod|big(wedge|vee|[ou](?:times|plus|dot)|(?:times|c[ua]p|dot)|sqcup|circ)|(?:sim|succ|prec)(eq)?|[ou](?:slash|times|minus|plus)|[co]dot|sq(c[au]p|su[bp]seteq)|su[bp](?:seteq|set)|c[au]p|nolimits|math(?:bb|bf|sf|tt|rm|it)|bowtie|c@ncel|choose|n@space|(?:(script){1,2}|display)style|([sn][we])arrow|[lgn](eq|or|and|e)|([dchvlr])?dot([sp])?|models|approx|right|left|doteq|equiv|perp|aleph|amalg|prime|nabla|infty|wedge|times|asymp|smile|sqrt|colon|frown|check|smash|dashv|vdash|skew|sharp|owns|[vV]ert|circ|star|surd|flat|gets|prod|sum|[gl]{2}|[pm]{2}|d(?:(d)?ag(ger)?|iv)|(wide)?(?:tilde|hat|breve|acute|grave|bar)|ve[ce]|ast|ell|mid|neg|w[pr]|Re|Im|ni|in|(?:prop|(?:long|set)?maps)?to|over|atop|iff|math(?:rel|op(en)?|close)|[SPcbd]|Orb|(La)?TeX)\b/
 		},
 		{ // Maths - Operators
 			className: "string",
@@ -1174,7 +1174,7 @@ function latex(hljs) {
 		{ // special break
 			className: "string",
 			relevance: 1,
-			begin: /\\(?:s[pb]|,|;|!)/
+			begin: /\\(?:s[pb]|,|;|!)\b/
 		},
 		{ // fills and rules
 			className: "property",
