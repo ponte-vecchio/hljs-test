@@ -1065,7 +1065,7 @@ function latex(hljs) {
 		},
 		{ // Logical builtins
 			className: "title function",
-			begin: /\\(@ifpackageloaded|if(?:case|cat|dim|eof|false|[hvm]mode|inner|num|odd|true|void|x)|if(?:[a-zA-Z_@]{0,15}|)|else|if|or|fi)\b/,
+			begin: /\\(@ifpackageloaded|if(?:case|cat|dim|eof|false|[hvm]mode|inner|num|odd|true|void|x)|if[a-zA-Z_@]+|else|if|or|fi)\b/,
 			relevance: 1
 		},
 		{ // Logical Macros
@@ -1141,7 +1141,7 @@ function latex(hljs) {
 		},
 		{ // Maths - Operators
 			className: "string",
-			begin: /\\(?:l(?:og|im(?:sup|inf)?|n)|brace[lrud]{2}|arc(?:sin|cos|tan)|(?:sin|co[st]|tan)(h)?|(?:cs|se)c|m(?:ax|in)|sup|inf|arg|rad|de[gt]|ker|dim|hom|exp|gcd|Pr)\b/
+			begin: /\\(l(og|im(?:sup|inf)?|n)|brace[lrud]{2}|arc(sin|cos|tan)|(sin|co[st]|tan)(h)?|(cs|se)c|m(ax|in)|sup|inf|arg|rad|de[gt]|ker|dim|hom|exp|gcd|Pr)\b/
 		},
 		{
 			// Maths - Operator Symbols
@@ -1151,7 +1151,7 @@ function latex(hljs) {
 		},
 		{ // Maths - Greek primitives
 			className: "string",
-			begin: /\\(?:alpha|(?:[bB]|[zZ]|[tT]h)?eta|[gG]amma|[dD]elta|[lL]ambda|[eEuU]psilon|[iI]ota|[kK]appa|[mMnN]u|(?:[pP]s|[pP]|[xX]|[pPcC]h|var(?:ph|p))i|var(?:epsilon|theta|sigma|rho)|[rR]ho|[sS]igma|[oO]mega|[tT]au)\b/
+			begin: /\\(alpha|([bB]|[zZ]|[tT]h)?eta|[gG]amma|[dD]elta|[lL]ambda|[eEuU]psilon|[iI]ota|[kK]appa|[mMnN]u|([pP]s|[pP]|[xX]|[pPcC]h|var(ph|p))i|var(epsilon|theta|sigma|rho)|[rR]ho|[sS]igma|[oO]mega|[tT]au)\b/
 		}
 	];
 	const TEX_SPACING_CS = [
