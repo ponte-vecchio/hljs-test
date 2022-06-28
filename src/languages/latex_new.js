@@ -1040,10 +1040,6 @@ function latex(hljs) {
 			className: "number",
 			begin: /(((pl|min)us|height|(dep|wid)th|to)\s?(?:(^['"])?(\d)?[.,]?(\d{1,20})+|'[0-7]{1,20}?[.,]?([0-7]{1,20})?|"[A-F\d]{1,20}?[.,]?([\dA-F]{1,20})?)(p[tc]|[bs]p|in|[cm]m|dd|cc|e[xm]|m(uh|u)|fi[l]{1,3}))/
 		},
-		//  hexadecimal
-		{ className: "number", begin: /("+[\dA-F]{2,8})\b/ },
-		// ' for octal
-		{ className: "number", begin: /('+[0-7]{2,8})\b/ },
 		// operators
 		{ className: "operator", begin: /=/ },
 		{ className: "operator", begin: /(!`(?:&{1,5}?(=)|\+|-|\*|\/|\|>|<|!|\?|:|^))/ },
@@ -1069,7 +1065,7 @@ function latex(hljs) {
 		},
 		{ // Logical builtins
 			className: "title function",
-			begin: /\\(?:else|@ifpackageloaded|if(?:case|cat|dim|eof|false|[hvm]mode|inner|num|odd|true|void|x)|if([a-zA-Z_]|@){0,15}|if|or|fi)\b/,
+			begin: /\\(@ifpackageloaded|if(?:case|cat|dim|eof|false|[hvm]mode|inner|num|odd|true|void|x)|if(?:[a-zA-Z_@]{0,15}|)|else|if|or|fi)\b/,
 			relevance: 1
 		},
 		{ // Logical Macros
@@ -1096,11 +1092,11 @@ function latex(hljs) {
 		},
 		{ // penalties, tolerances, demerits
 			className: "property",
-			begin: /\\(?:(?:last|(inter){0,1}line|(?:left|right|ex)?hyphen?(min)|binop|rel|club|(display)?widow|(?:pre|post)display|broken|floating|output|inter(?:display|footnote)line)?penalty|insertpenalties|(pre)?tolerance|(?:(?:double|final)hyphen|adj)demerits)\b/
+			begin: /\\(?:(?:last|(inter){0,1}line|(left|right|ex)?hyphen?(min)|binop|rel|club|(display)?widow|(?:pre|post)display|broken|floating|output|inter(?:display|footnote)line)?penalty|insertpenalties|(pre)?tolerance|(?:(?:double|final)hyphen|adj)demerits)\b/
 		},
 		{ // Registers
 			className: "type",
-			begin: /\\(?:counter|count[@\d]{0,3}|count[@\da-zA-Z]{1,10}|dimen[@\da-zA-Z]{1,10}|dimen|skip[\d@]{1,3}|(?:mu|hide|m)?skip|toks[\d@]{1,3}|toks|mathaccent|accent?([\d@]{1,3})|box|(?:tt|sl|bf|it)?fam|language|char?([@\d]{0,3}))/
+			begin: /\\(?:counter|count(@)?(25[0-5]|2[0-4]\d|1\d\d|\d\d|\d)?|dimen[@\da-zA-Z]{1,10}|dimen|skip[\d@]{1,3}|(?:mu|hide|m)?skip|toks[\d@]{1,3}|toks|mathaccent|accent?([\d@]{1,3})|box|(?:tt|sl|bf|it)?fam|language|char?([@\d]{0,3}))/
 		},
 		{ // new IQs
 			className: "meta keyword",
@@ -1159,11 +1155,10 @@ function latex(hljs) {
 		}
 	];
 	const TEX_SPACING_CS = [
-		{ // ~ as active but not \~
-			className: "literal",
-			relevance: 1,
-			begin: /!(\\)~/
-		},
+		// {
+		// 	className: "property",
+		// 	begin: /^(p[tc]|[bs]p|in|[cm]m|dd|cc|e[xm]|m(?:uh|u)|fil{1,3})/
+		// },
 		{
 			className: "property",
 			begin: /\\(?:(?:(non)?french|normal)spacing|[hv](?:glue|top|size|filneg|fil{1,2}|fuzz|ss)|[hvmfp]box|un[hv]box|par|(?:small|large|last|[eu]n|med|big|[hvm])(?:skipamount|skip)|displaywidth|(?:[hv]|negthin|thin|en)space|q{1,2}uad|space|empty|null|(end)?graf)\b/
@@ -1179,7 +1174,7 @@ function latex(hljs) {
 		{ // special break
 			className: "string",
 			relevance: 1,
-			begin: /\\(?:s[pb]|,|;|!)\b/
+			begin: /\\(?:s[pb]|,|;|!)/
 		},
 		{ // fills and rules
 			className: "property",
@@ -1228,7 +1223,7 @@ function latex(hljs) {
 	const PRIMITIVES = {
 		className: "keyword",
 		begin: /\\/,
-		relavance: 0,
+		relevance: 0,
 		contains: [
 			{
 				endsParent: true,
